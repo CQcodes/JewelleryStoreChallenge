@@ -1,0 +1,33 @@
+<body>
+  <div class="container">
+    <app-nav-menu></app-nav-menu>
+    
+    <h3>Gold Price Calculator</h3>
+
+<form [formGroup]="calculateForm" (ngSubmit)="onSubmit($event)">
+  <div class="form-group">
+    <label for="price">Gold Price /gm</label>
+    <input type="number" formControlName="price" class="form-control" placeholder="Price (per gm)">
+  </div>
+  <div class="form-group">
+    <label for="weight">Weight</label>
+    <input type="number" formControlName="weight" class="form-control" placeholder="Weight (in gm)">
+    <small id="weight-help" class="form-text text-muted">in gram</small>
+  </div>
+  <div class="form-group">
+    <label for="discount">Discount</label>
+    <input type="number" formControlName="discount" class="form-control" placeholder="Discount(%)">
+    <small id="discount-help" class="form-text text-muted">in percentage</small>
+  </div>
+  <button type="submit" class="btn btn-primary">Calculate</button>
+</form>
+  </div>
+  <div *ngIf="error" class="alert alert-danger">
+    {{error}}
+</div>
+<div *ngIf="calculatedPrice" class="alert alert-danger">
+  Calculated Price : {{calculatedPrice}}
+</div>
+</body>
+
+

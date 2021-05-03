@@ -33,18 +33,18 @@ namespace JewelleryStore.Repository
                     Id = Guid.NewGuid(),
                     FirstName = "Normal",
                     LastName = "User",
-                    Email = "normaluser@jstore.com",
+                    Email = "nuser@jstore.com",
                     Password = "password",
-                    Role = "Normal"
+                    Role = "normal"
                 },
                 new User
                 {
                     Id = Guid.NewGuid(),
-                    FirstName = "Previleged",
+                    FirstName = "Privilege",
                     LastName = "User",
-                    Email = "previlegeduser@jstore.com",
+                    Email = "puser@jstore.com",
                     Password = "password",
-                    Role = "Previleged"
+                    Role = "privilege"
                 }
             };
         }

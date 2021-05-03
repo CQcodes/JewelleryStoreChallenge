@@ -26,8 +26,8 @@ import { PriceService } from './shared/services/price.service';
     HttpClientModule,
     FormsModule, ReactiveFormsModule,
     RouterModule.forRoot([
-      { path: '', component: HomeComponent, pathMatch: 'full', canLoad: [AuthGuard] },
-      { path: 'calculator', component: CalculatorComponent, canLoad: [AuthGuard] },
+      { path: '', component: HomeComponent, pathMatch: 'full', canActivate: [AuthGuard] },
+      { path: 'calculator', component: CalculatorComponent, canActivate: [AuthGuard] },
       { path: 'login', component: LoginComponent },
     ])
   ],

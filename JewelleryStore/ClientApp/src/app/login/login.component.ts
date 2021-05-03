@@ -6,8 +6,7 @@ import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  templateUrl: './login.component.html'
 })
 export class LoginComponent implements OnInit {
   public loginForm: FormGroup;
@@ -26,7 +25,7 @@ export class LoginComponent implements OnInit {
       password:['',Validators.required]
     });
 
-    this.returnUrl == this.route.snapshot.queryParams.returnUrl || '/';
+    this.returnUrl = this.route.snapshot.queryParams.returnUrl || '/';
   }
 
   public onSubmit(e: Event){
@@ -41,7 +40,7 @@ export class LoginComponent implements OnInit {
     this.authService.login(this.form.emailAddress.value, this.form.password.value)
     .pipe(first())
     .subscribe(
-      data => {
+      data => {        
         this.router.navigate([this.returnUrl]);
       },
       error => {

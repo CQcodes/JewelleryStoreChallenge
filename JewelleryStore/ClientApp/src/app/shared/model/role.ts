@@ -1,4 +1,4 @@
 export enum Role{
-    normal = 'Normal',
-    privilege = 'Privilage'
+    normal = 'normal',
+    privilege = 'privilege'
 };

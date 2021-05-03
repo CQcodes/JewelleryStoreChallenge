@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Role } from '../shared/model/role';
+import { AuthService } from '../shared/services/auth.service';
 import { PriceService } from '../shared/services/price.service';
 
 @Component({
@@ -11,8 +13,9 @@ export class CalculatorComponent implements OnInit  {
   public calculateForm: FormGroup;
   public error = '';
   public calculatedPrice = 0;
+  public isPrivilegeUser = false;
 
-  constructor(private formBuilder:FormBuilder, private priceService: PriceService){}
+  constructor(private formBuilder:FormBuilder, private priceService: PriceService, private authService:AuthService){}
 
   get form(){
     return this.calculateForm.controls;
@@ -22,28 +25,42 @@ export class CalculatorComponent implements OnInit  {
     this.calculateForm = this.formBuilder.group({
       price: ['',Validators.required],
       weight:['',Validators.required],
-      discount:['',Validators.required]
+      discount:['']
     });
+
+    const currentUser = this.authService.currentUserValue;
+    if(currentUser.role === Role.privilege){
+      this.isPrivilegeUser = true;
+    }
   }
 
   public onSubmit(e: Event){
     e.stopPropagation();
     e.preventDefault();
 
+    // reset values
+    this.calculatedPrice = 0;
+    this.error = '';
+
+    let discount = null;    
+    if(this.isPrivilegeUser && this.form.discount.value){
+      discount = this.form.discount.value;
+    }
+    // form state check
     if(this.calculateForm.invalid){
-      this.error = "invalid email or password.";
+      this.error = "please enter your input in all the field.";
       return false;
     }
 
-    this.priceService.calculate(this.form.price.value, this.form.weight.value,this.form.discount.value)
+    // invoke price-service
+    this.priceService.calculate(this.form.price.value, this.form.weight.value,discount)
     .pipe().subscribe(data => {
         this.calculatedPrice = data;
       },
-      error => {
+      error => {        
+        console.error(error);
         this.error = "An unknown error has occured.";
       }
     );
-
-    return false;
   }
 }

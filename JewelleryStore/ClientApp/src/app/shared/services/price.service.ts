@@ -9,10 +9,9 @@ export class PriceService{
     
     constructor(private http: HttpClient, private authService: AuthService){}
 
-    public calculate(price:number,weight:number,discount?:number): Observable<any>{
-        debugger;
+    public calculate(pricePerGram:number,weightInGram:number,discountInPercentage?:number): Observable<any>{        
         const currentUser = this.authService.currentUserValue;
-        let headers = new HttpHeaders({"Authorization":`bearer ${currentUser.token}`});
-        return this.http.post<any>(`${environment.apiBaseUrl}${environment.priceUrl}`, {price, weight, discount},{headers: headers}).pipe();
+        let headers = new HttpHeaders().set("Authorization", `bearer ${currentUser.token}`);
+        return this.http.post<any>(`${environment.apiBaseUrl}${environment.priceUrl}`, {pricePerGram, weightInGram, discountInPercentage},{headers: headers}).pipe();
     }
 }

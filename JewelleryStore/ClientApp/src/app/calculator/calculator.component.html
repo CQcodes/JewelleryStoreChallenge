@@ -1,33 +1,34 @@
 <body>
   <div class="container">
     <app-nav-menu></app-nav-menu>
-    
-    <h3>Gold Price Calculator</h3>
-
-<form [formGroup]="calculateForm" (ngSubmit)="onSubmit($event)">
-  <div class="form-group">
-    <label for="price">Gold Price /gm</label>
-    <input type="number" formControlName="price" class="form-control" placeholder="Price (per gm)">
-  </div>
-  <div class="form-group">
-    <label for="weight">Weight</label>
-    <input type="number" formControlName="weight" class="form-control" placeholder="Weight (in gm)">
-    <small id="weight-help" class="form-text text-muted">in gram</small>
-  </div>
-  <div class="form-group">
-    <label for="discount">Discount</label>
-    <input type="number" formControlName="discount" class="form-control" placeholder="Discount(%)">
-    <small id="discount-help" class="form-text text-muted">in percentage</small>
-  </div>
-  <button type="submit" class="btn btn-primary">Calculate</button>
-</form>
-  </div>
-  <div *ngIf="error" class="alert alert-danger">
-    {{error}}
-</div>
-<div *ngIf="calculatedPrice" class="alert alert-danger">
-  Calculated Price : {{calculatedPrice}}
-</div>
+    <div class="content-container">
+      <h3>Gold Price Calculator</h3>
+    <div *ngIf="error" class="alert alert-danger">
+      {{error}}
+    </div>
+    <form [formGroup]="calculateForm" (ngSubmit)="onSubmit($event)">
+      <div class="form-group">
+        <label for="price">Gold Price /gm</label>
+        <input type="number" formControlName="price" class="form-control" placeholder="Price (per gm)">
+      </div>
+      <div class="form-group">
+        <label for="weight">Weight</label>
+        <input type="number" formControlName="weight" class="form-control" placeholder="Weight (in gm)">
+        <small id="weight-help" class="form-text text-muted">in gram</small>
+      </div>
+      <div *ngIf="isPrivilegeUser" class="form-group">
+        <label for="discount">Discount</label>
+        <input type="number" formControlName="discount" class="form-control" placeholder="Discount(%)">
+        <small id="discount-help" class="form-text text-muted">in percentage (if no value supplied, by default 2% discount will be applied.)</small>
+      </div>
+      <p *ngIf="!isPrivilegeUser">User with role<mark> 'privilege' </mark> can enter custom discount. Default discount is <mark>2%</mark>.</p>
+      <button type="submit" class="btn btn-primary">Calculate</button>
+    </form>
+    <div *ngIf="calculatedPrice" class="alert alert-success" role="alert" style="margin-top: 10px;">
+      <h4 class="alert-heading">Calculated Price : Rs {{calculatedPrice}} /-</h4>
+    </div>
+    </div>
+  </div>  
 </body>
 
 
